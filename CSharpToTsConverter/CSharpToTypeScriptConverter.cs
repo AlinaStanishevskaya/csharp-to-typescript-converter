@@ -60,22 +60,21 @@ public class CSharpToTypeScriptConverter
 
 	private string ConvertType(string csharpType)
 	{
-		// Handle List<T>
-		if (csharpType.StartsWith("List<") && csharpType.EndsWith(">"))
+		var typeSyntax = SyntaxFactory.ParseTypeName(csharpType);
+
+		if (typeSyntax is GenericNameSyntax g && g.Identifier.Text == "List")
 		{
-			var inner = csharpType.Substring(5, csharpType.Length - 6);
+			var inner = g.TypeArgumentList.Arguments.First().ToString();
 			return $"{ConvertType(inner)}[]";
 		}
 
 		var nonNullableType = csharpType.TrimEnd('?');
 
-		// Map primitive types
 		if (TypeMap.TryGetValue(nonNullableType, out var ts))
 		{
 			return ts;
 		}
 
-		// Assume custom/nested class
 		return nonNullableType;
 	}
 }
