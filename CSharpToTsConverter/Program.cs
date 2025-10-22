@@ -1,6 +1,13 @@
-﻿
-var inputFilePath = args.Length > 0 ? args[0] : "input.cs";
-var outputFilePath = args.Length > 1 ? args[1] : "output.ts";
+﻿// NOTE: The converter reads the input from input.cs file only for convenience.
+// The file is excluded from compilation, so it can contain any text.
+// The converter itself operates on strings and can easily be tested with
+// string inputs directly, without reading from files.
+
+var defaultInput = Path.Combine("Samples", "input.cs");
+var defaultOutput = Path.Combine("Samples", "output.ts");
+
+var inputFilePath = args.Length > 0 ? args[0] : defaultInput;
+var outputFilePath = args.Length > 1 ? args[1] : defaultOutput;
 
 if (!File.Exists(inputFilePath))
 {

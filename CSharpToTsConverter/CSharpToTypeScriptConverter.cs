@@ -19,6 +19,11 @@ public class CSharpToTypeScriptConverter
 
 	public string Convert(string input)
 	{
+		if (string.IsNullOrWhiteSpace(input))
+		{
+			return string.Empty;
+		}
+
 		var syntaxTree = CSharpSyntaxTree.ParseText(input);
 		var root = syntaxTree.GetRoot();
 

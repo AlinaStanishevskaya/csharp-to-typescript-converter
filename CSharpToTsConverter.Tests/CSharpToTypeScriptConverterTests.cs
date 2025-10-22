@@ -58,4 +58,28 @@ export interface Address {
 
 		Assert.Equal(expectedOutput, actual);
 	}
+
+	[Fact]
+	public void Convert_NullInput_ReturnsEmptyString()
+	{
+		string? input = null;
+
+		string expectedOutput = "";
+
+		var actual = _converter.Convert(input).Trim();
+
+		Assert.Equal(expectedOutput, actual);
+	}
+
+	[Fact]
+	public void Convert_NotCSharpInputString_ReturnsEmptyString()
+	{
+		string? input = "Just some random text that is not C# code.";
+
+		string expectedOutput = "";
+
+		var actual = _converter.Convert(input).Trim();
+
+		Assert.Equal(expectedOutput, actual);
+	}
 }
